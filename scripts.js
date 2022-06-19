@@ -1,35 +1,81 @@
-distribuirCartas();
+let carta1;
+let carta2;
+let contarCarta = 0;
 
 function comparador() { 
 	return Math.random() - 0.5; 
 }
 
+function virarCarta(elemento) {
+    elemento.querySelector(".front-face").classList.add("front-face-effect");
+    elemento.querySelector(".back-face").classList.add("back-face-effect");
+}
+
+function desvirarCarta(elemento) {
+    elemento.querySelector(".front-face").classList.remove("front-face-effect");
+    elemento.querySelector(".back-face").classList.remove("back-face-effect");
+}
+
+function selecionarCarta(elemento) {
+    const virado = elemento.querySelector(".front-face").classList.contains("front-face-effect");
+    if(virado === false) {
+        contarCarta++;
+        if(carta1 === undefined) {
+            virarCarta(elemento);
+            carta1 = elemento;
+        } else {
+            virarCarta(elemento);
+            carta2 = elemento;
+            if(carta1.innerHTML === carta2.innerHTML) {
+                carta1 = undefined;
+                carta2 = undefined;
+            } else {
+                setTimeout(desvirarCarta, 1000, carta1);
+                setTimeout(desvirarCarta, 1000, carta2);
+                carta1 = undefined;
+                carta2 = undefined;
+            }
+        }
+    }
+}
+
 function distribuirCartas() {
-    let numeroDeCartas = prompt("Escolha o número de cartas");
+    let numeroDeCartas = prompt("Escolha um número de cartas que seja par e esteja entre 4 e 14:");
     let vereficaRegra = false;
-    let contadorDeCarta = 0;
     let listaDeCartas = [];
-    let bancoDeCartas = [`imagens/banana.png`, `imagens/laranja.png`, `imagens/limao.png`, `imagens/maca.png`, `imagens/melancia.png`, `imagens/morango.png`, `imagens/uva.png`];
+    let bancoDeCartas = [`imagens/bobrossparrot.gif`, `imagens/explodyparrot.gif`, `imagens/fiestaparrot.gif`, `imagens/metalparrot.gif`, `imagens/revertitparrot.gif`, `imagens/tripletsparrot.gif`, `imagens/unicornparrot.gif`];
     let versoCarta = ``;
-    const container = document.querySelector(".container");
 
     while(vereficaRegra === false) {
         if((numeroDeCartas % 2 === 0) && (numeroDeCartas >= 4 && numeroDeCartas <= 14) && (numeroDeCartas !== NaN)) {
             vereficaRegra = true;
         } else {
-            numeroDeCartas = prompt("Escolha o número de cartas");
+            numeroDeCartas = prompt("Escolha um número de cartas que seja par e esteja entre 4 e 14:");
         }
     }
 
-    while(contadorDeCarta < numeroDeCartas / 2) {
-        versoCarta = bancoDeCartas[contadorDeCarta];
-        let carta = `<div class="card"><div class="front-face face"><img src="imagens/front 1.png" /></div><div class="back-face face"><img src="${versoCarta}" /></div></div>`;
+    for(let i = 0; i < numeroDeCartas / 2; i++) {
+        versoCarta = bancoDeCartas[i];
+        let carta = `
+            <div class="card" onclick="selecionarCarta(this)">
+                <div class="front-face face">
+                    <img src="imagens/front 1.png" />
+                </div>
+                <div class="back-face face">
+                    <img src="${versoCarta}" />
+                </div>
+            </div>`;
         listaDeCartas.push(carta);
         listaDeCartas.push(carta);
-        contadorDeCarta++;
     }
 
     listaDeCartas.sort(comparador);
-    listaDeCartas = listaDeCartas.join(' ');
-    container.innerHTML = listaDeCartas;
+    
+    const div = document.querySelector(".container");
+    div.innerHTML = "";
+    for(let i = 0; i < numeroDeCartas; i++) {
+        div.innerHTML += listaDeCartas[i];
+    }
 }
+
+distribuirCartas();
