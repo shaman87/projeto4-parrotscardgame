@@ -6,39 +6,6 @@ function comparador() {
 	return Math.random() - 0.5; 
 }
 
-function virarCarta(elemento) {
-    elemento.querySelector(".front-face").classList.add("front-face-effect");
-    elemento.querySelector(".back-face").classList.add("back-face-effect");
-}
-
-function desvirarCarta(elemento) {
-    elemento.querySelector(".front-face").classList.remove("front-face-effect");
-    elemento.querySelector(".back-face").classList.remove("back-face-effect");
-}
-
-function selecionarCarta(elemento) {
-    const virado = elemento.querySelector(".front-face").classList.contains("front-face-effect");
-    if(virado === false) {
-        contarCarta++;
-        if(carta1 === undefined) {
-            virarCarta(elemento);
-            carta1 = elemento;
-        } else {
-            virarCarta(elemento);
-            carta2 = elemento;
-            if(carta1.innerHTML === carta2.innerHTML) {
-                carta1 = undefined;
-                carta2 = undefined;
-            } else {
-                setTimeout(desvirarCarta, 1000, carta1);
-                setTimeout(desvirarCarta, 1000, carta2);
-                carta1 = undefined;
-                carta2 = undefined;
-            }
-        }
-    }
-}
-
 function distribuirCartas() {
     let numeroDeCartas = prompt("Escolha um número de cartas que seja par e esteja entre 4 e 14:");
     let vereficaRegra = false;
@@ -75,6 +42,39 @@ function distribuirCartas() {
     div.innerHTML = "";
     for(let i = 0; i < numeroDeCartas; i++) {
         div.innerHTML += listaDeCartas[i];
+    }
+}
+
+function virarCarta(elemento) {
+    elemento.querySelector(".front-face").classList.add("front-face-effect");
+    elemento.querySelector(".back-face").classList.add("back-face-effect");
+}
+
+function desvirarCarta(elemento) {
+    elemento.querySelector(".front-face").classList.remove("front-face-effect");
+    elemento.querySelector(".back-face").classList.remove("back-face-effect");
+}
+
+function selecionarCarta(elemento) {
+    const virado = elemento.querySelector(".front-face").classList.contains("front-face-effect");
+    if(virado === false) {
+        contarCarta++;
+        if(carta1 === undefined) {
+            virarCarta(elemento);
+            carta1 = elemento;
+        } else {
+            virarCarta(elemento);
+            carta2 = elemento;
+            if(carta1.innerHTML === carta2.innerHTML) {
+                carta1 = undefined;
+                carta2 = undefined;
+            } else {
+                setTimeout(desvirarCarta, 1000, carta1);
+                setTimeout(desvirarCarta, 1000, carta2);
+                carta1 = undefined;
+                carta2 = undefined;
+            }
+        }
     }
 }
 
