@@ -15,7 +15,7 @@ body {
     width: auto;
 }
 
-.topo h1 {
+.topo div {
     color: #75B79E;
     font-family: 'Roboto';
     font-size: 56px;
@@ -71,11 +71,41 @@ body {
   transform: rotateY(-180deg);
 }
 
-/*
-.card:hover .back-face {
-  transform: rotateY(0deg);
+@media (max-width: 540px) {
+  .topo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 63px;
+    margin: 40px auto 47px auto;
+  }
+
+  .topo div {
+    display: flex;
+    justify-content: center;
+    color: #75B79E;
+    font-family: 'Roboto';
+    font-size: 36px;
+    font-weight: 700;
+  }
 }
 
-.card:hover .front-face {
-  transform: rotateY(-180deg);
-}*/
+@media (max-width: 347px) {
+  .topo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 63px;
+    margin: 40px auto 47px auto;
+  }
+
+  .topo div {
+    display: flex;
+    justify-content: center;
+    color: #75B79E;
+    font-family: 'Roboto';
+    font-size: 36px;
+    font-weight: 700;
+    padding: 0 50px;
+  }
+}

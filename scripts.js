@@ -1,13 +1,15 @@
 let carta1;
 let carta2;
 let contarCarta = 0;
+let numeroDeCartas = 0;
+let contarParDesvirado = 0;
 
 function comparador() { 
 	return Math.random() - 0.5; 
 }
 
 function distribuirCartas() {
-    let numeroDeCartas = prompt("Escolha um número de cartas que seja par e esteja entre 4 e 14:");
+    numeroDeCartas = prompt("Escolha um número de cartas que seja par e esteja entre 4 e 14:");
     let vereficaRegra = false;
     let listaDeCartas = [];
     let bancoDeCartas = [`imagens/bobrossparrot.gif`, `imagens/explodyparrot.gif`, `imagens/fiestaparrot.gif`, `imagens/metalparrot.gif`, `imagens/revertitparrot.gif`, `imagens/tripletsparrot.gif`, `imagens/unicornparrot.gif`];
@@ -55,6 +57,21 @@ function desvirarCarta(elemento) {
     elemento.querySelector(".back-face").classList.remove("back-face-effect");
 }
 
+function fimDoJogo() {
+    let novoJogo = "";
+    if(contarParDesvirado === numeroDeCartas / 2) {
+        alert(`Você ganhou em ${contarCarta} jogadas!`);
+        contarParDesvirado = 0;
+        contarCarta = 0;
+        novoJogo = prompt("Deseja jogar novamente? (sim ou não)");
+        if(novoJogo === "sim") {
+            distribuirCartas();
+        } else if(novoJogo === "não") {
+            alert("Até o próximo jogo");
+        }
+    }
+}
+
 function selecionarCarta(elemento) {
     const virado = elemento.querySelector(".front-face").classList.contains("front-face-effect");
     if(virado === false) {
@@ -68,6 +85,7 @@ function selecionarCarta(elemento) {
             if(carta1.innerHTML === carta2.innerHTML) {
                 carta1 = undefined;
                 carta2 = undefined;
+                contarParDesvirado++;
             } else {
                 setTimeout(desvirarCarta, 1000, carta1);
                 setTimeout(desvirarCarta, 1000, carta2);
@@ -76,6 +94,7 @@ function selecionarCarta(elemento) {
             }
         }
     }
+    setTimeout(fimDoJogo, 1000);
 }
 
 distribuirCartas();
